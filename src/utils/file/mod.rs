@@ -1,5 +1,7 @@
 use std::{fs, io, path::PathBuf};
 
+use serde_json::Value;
+
 pub fn copy_folder(src: &PathBuf, dest: &PathBuf) -> io::Result<()> {
     if !src.exists() || !src.is_dir() {
         return Err(io::Error::new(
@@ -21,4 +23,10 @@ pub fn copy_folder(src: &PathBuf, dest: &PathBuf) -> io::Result<()> {
         }
     }
     Ok(())
+}
+
+pub fn read_file_to_json(path: &PathBuf) -> Result<Value, std::io::Error> {
+    let file = fs::read_to_string(path)?;
+    let json: Value = serde_json::from_str(&file)?;
+    Ok(json)
 }

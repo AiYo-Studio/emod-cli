@@ -4,15 +4,13 @@ mod utils {
 }
 mod commands {
     pub mod create;
+    pub mod release;
 }
 
 use std::{env, fs, path::PathBuf};
 
 use clap::{arg, Command};
 
-/**
- * 调试项目，请勿使用！
- */
 fn main() {
     let matches = Command::new("emod-cli")
         .version("1.0.0")
@@ -26,11 +24,18 @@ fn main() {
                 .about("Create a new mod project")
                 .arg_required_else_help(true),
         )
+        .subcommand(
+            Command::new("release")
+                .arg(arg!(-p --path <path> "The path of the project").required(false))
+                .arg(arg!(-v --version <version> "The version of the project").required(false))
+                .about("Package project"),
+        )
         .arg_required_else_help(true)
         .get_matches();
     let temp_dir = check_temp_dir();
     match matches.subcommand() {
         Some(("create", sub_matches)) => commands::create::execute(sub_matches, &temp_dir),
+        Some(("release", sub_matches)) => commands::release::execute(sub_matches, &temp_dir),
         _ => {
             unreachable!();
         }

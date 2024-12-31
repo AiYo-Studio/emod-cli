@@ -121,6 +121,18 @@ fn initialize_project(local_dir: &str, name: &str) -> io::Result<()> {
     }
     // 替换目标目录中 python 文件中的变量
     search_python_file(final_dir.clone(), &info);
+    // 取 uuid 最后 8 位
+    let behavior_pack_uuid = info.behavior_pack_uuid.chars().take(8).collect::<String>();
+    let resource_pack_uuid = info.resource_pack_uuid.chars().take(8).collect::<String>();
+    // 重命名 behavior_pack 和 resource_pack 文件夹
+    fs::rename(
+        format!("{}/behavior_pack", &local_dir),
+        format!("{}/behavior_pack_{}", &local_dir, behavior_pack_uuid),
+    )?;
+    fs::rename(
+        format!("{}/resource_pack", &local_dir),
+        format!("{}/resource_pack_{}", &local_dir, resource_pack_uuid),
+    )?;
     Ok(())
 }
 

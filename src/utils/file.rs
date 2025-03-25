@@ -1,6 +1,7 @@
 use std::{fs, io, path::PathBuf};
 
 use serde_json::Value;
+use anyhow::Result;
 
 pub fn copy_folder(src: &PathBuf, dest: &PathBuf) -> io::Result<()> {
     if !src.exists() || !src.is_dir() {
@@ -25,8 +26,13 @@ pub fn copy_folder(src: &PathBuf, dest: &PathBuf) -> io::Result<()> {
     Ok(())
 }
 
-pub fn read_file_to_json(path: &PathBuf) -> Result<Value, std::io::Error> {
+pub fn read_file_to_json(path: &PathBuf) -> Result<Value> {
     let file = fs::read_to_string(path)?;
     let json: Value = serde_json::from_str(&file)?;
     Ok(json)
+}
+
+pub fn find_project_dir(path: &Option<String>) -> Result<PathBuf> {
+    let path = path.as_deref().unwrap_or(".");
+    Ok(PathBuf::from(path))
 }

@@ -1,44 +1,18 @@
-mod utils {
-    pub mod file;
-    pub mod git;
-}
-mod commands {
-    pub mod create;
-    pub mod release;
-}
+mod commands;
+mod entity;
+mod utils;
 
+use crate::commands::{Cli, Commands};
+use clap::Parser;
 use std::{env, fs, path::PathBuf};
 
-use clap::{arg, Command};
-
 fn main() {
-    let matches = Command::new("emod-cli")
-        .version("1.0.0")
-        .author("AiYo Studio")
-        .about("Convenient Management of NetEase Minecraft Mod Project")
-        .allow_external_subcommands(true)
-        .subcommand(
-            Command::new("create")
-                .arg(arg!(-n --name <name> "The name of the mod").required(true))
-                .arg(arg!(-t --target [target] "Example target, default example is 'default'"))
-                .about("Create a new mod project")
-                .arg_required_else_help(true),
-        )
-        .subcommand(
-            Command::new("release")
-                .arg(arg!(-p --path <path> "The path of the project").required(false))
-                .arg(arg!(-v --version <version> "The version of the project").required(false))
-                .about("Package project"),
-        )
-        .arg_required_else_help(true)
-        .get_matches();
+    let cli = Cli::parse();
     let temp_dir = check_temp_dir();
-    match matches.subcommand() {
-        Some(("create", sub_matches)) => commands::create::execute(sub_matches, &temp_dir),
-        Some(("release", sub_matches)) => commands::release::execute(sub_matches, &temp_dir),
-        _ => {
-            unreachable!();
-        }
+    match &cli.command {
+        Commands::Release(args) => commands::release::execute(args),
+        Commands::Create(args) => commands::create::execute(args, &temp_dir),
+        Commands::Components(args) => commands::components::execute(args),
     }
 }
 

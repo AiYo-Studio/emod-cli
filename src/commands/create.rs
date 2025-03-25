@@ -1,30 +1,21 @@
+use crate::{entity::project::ProjectInfo, utils::file};
 use std::{
     fs, io,
     path::{Path, PathBuf},
 };
 
-use clap::ArgMatches;
+use crate::commands::CreateArgs;
+use crate::utils::git;
 use reqwest::blocking::Client;
 use uuid::Uuid;
 
-use crate::utils::{file, git};
-
-struct ProjectInfo {
-    name: String,
-    lower_name: String,
-    behavior_pack_uuid: String,
-    resource_pack_uuid: String,
-    behavior_module_uuid: String,
-    resource_module_uuid: String,
-}
-
-pub fn execute(sub_matches: &ArgMatches, temp_dir: &PathBuf) {
+pub fn execute(args: &CreateArgs, temp_dir: &PathBuf) {
     let default_target = String::from("default");
-    let name = sub_matches.get_one::<String>("name").unwrap();
-    let target = sub_matches
-        .get_one::<String>("target")
+    let target = args
+        .target
+        .as_deref()
         .unwrap_or(&default_target);
-    create_project(name, target, &temp_dir);
+    create_project(&args.name, target, &temp_dir);
 }
 
 fn create_project(name: &str, target: &str, temp_dir: &PathBuf) {
@@ -33,7 +24,7 @@ fn create_project(name: &str, target: &str, temp_dir: &PathBuf) {
         "https://api.github.com/repos/AiYo-Studio/emod-cli/contents/examples/{}",
         target
     );
-    // TODO: 代理调试, 待重构
+    // TODO 代理调试, 待重构
     let proxy = reqwest::Proxy::https("http://127.0.0.1:1080").unwrap();
     let client = Client::builder().proxy(proxy).build().unwrap();
     let response = client

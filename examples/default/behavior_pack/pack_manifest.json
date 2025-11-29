@@ -3,7 +3,7 @@
     {
       "description": "",
       "type": "data",
-      "uuid": "{behavior_module_uuid}",
+      "uuid": "{{behavior_module_uuid}}",
       "version": [
         0,
         0,
@@ -14,7 +14,7 @@
   "header": {
     "description": "",
     "name": "behavior_pack",
-    "uuid": "{behavior_pack_uuid}",
+    "uuid": "{{behavior_pack_uuid}}",
     "version": [
       0,
       0,

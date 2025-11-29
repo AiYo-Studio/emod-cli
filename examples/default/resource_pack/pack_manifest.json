@@ -8,7 +8,7 @@
             0
         ],
         "name": "resource_pack",
-        "uuid": "{resource_pack_uuid}",
+        "uuid": "{{resource_pack_uuid}}",
         "version": [
             0,
             0,
@@ -19,7 +19,7 @@
         {
             "description": "",
             "type": "resources",
-            "uuid": "{resource_module_uuid}",
+            "uuid": "{{resource_module_uuid}}",
             "version": [
                 0,
                 0,

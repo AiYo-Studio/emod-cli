@@ -11,8 +11,10 @@ pub enum CliError {
     Zip(zip::result::ZipError),
     Walkdir(walkdir::Error),
     Parse(ParseIntError),
+    Toml(toml::de::Error),
     NotFound(String),
     InvalidData(String),
+    InvalidInput(String),
 }
 
 impl fmt::Display for CliError {
@@ -25,8 +27,10 @@ impl fmt::Display for CliError {
             CliError::Zip(e) => write!(f, "压缩错误: {}", e),
             CliError::Walkdir(e) => write!(f, "目录遍历错误: {}", e),
             CliError::Parse(e) => write!(f, "解析错误: {}", e),
+            CliError::Toml(e) => write!(f, "TOML解析错误: {}", e),
             CliError::NotFound(msg) => write!(f, "未找到: {}", msg),
             CliError::InvalidData(msg) => write!(f, "无效数据: {}", msg),
+            CliError::InvalidInput(msg) => write!(f, "无效输入: {}", msg),
         }
     }
 }
@@ -72,6 +76,12 @@ impl From<walkdir::Error> for CliError {
 impl From<ParseIntError> for CliError {
     fn from(err: ParseIntError) -> Self {
         CliError::Parse(err)
+    }
+}
+
+impl From<toml::de::Error> for CliError {
+    fn from(err: toml::de::Error) -> Self {
+        CliError::Toml(err)
     }
 }
 

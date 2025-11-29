@@ -1,6 +1,6 @@
 [
     {
-        "pack_id": "{resource_pack_uuid}",
+        "pack_id": "{{resource_pack_uuid}}",
         "type": "Addon",
         "version": [
             0,

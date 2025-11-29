@@ -1,7 +1,7 @@
-ProjectName = "Circus"
+ProjectName = "{{mod_name}}"
 
-ServerSystemName = "CircusServerSystem"
-ServerSystemPath = "circusScripts.modServer.serverSystem.CircusServerSystem"
+ServerSystemName = "{{mod_name}}ServerSystem"
+ServerSystemPath = "{{mod_name_lower}}Scripts.modServer.serverSystem.{{mod_name}}ServerSystem"
 
-ClientSystemName = "CircusClientSystem"
-ClientSystemPath = "circusScripts.modClient.clientSystem.CircusClientSystem"
+ClientSystemName = "{{mod_name}}ClientSystem"
+ClientSystemPath = "{{mod_name_lower}}Scripts.modClient.clientSystem.{{mod_name}}ClientSystem"

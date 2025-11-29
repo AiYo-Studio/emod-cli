@@ -1,0 +1,28 @@
+[template]
+name = "default"
+description = "默认 emod 项目模板"
+
+[[renames]]
+from = "behavior_pack/exampleScripts"
+to = "behavior_pack/{{mod_name_lower}}Scripts"
+
+[[renames]]
+from = "behavior_pack"
+to = "behavior_pack_{{behavior_pack_uuid_short}}"
+
+[[renames]]
+from = "resource_pack"
+to = "resource_pack_{{resource_pack_uuid_short}}"
+
+[variables]
+mod_name = { required = true, description = "项目名称" }
+mod_name_lower = { required = true, description = "项目名称（小写驼峰）" }
+behavior_pack_uuid = { required = true, description = "行为包 UUID" }
+resource_pack_uuid = { required = true, description = "资源包 UUID" }
+behavior_module_uuid = { required = true, description = "行为包模块 UUID" }
+resource_module_uuid = { required = true, description = "资源包模块 UUID" }
+behavior_pack_uuid_short = { required = true, description = "行为包 UUID 前8位" }
+resource_pack_uuid_short = { required = true, description = "资源包 UUID 前8位" }
+
+[process]
+file_extensions = ["json", "py", "lang", "txt"]

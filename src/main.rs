@@ -3,6 +3,7 @@ mod entity;
 mod utils;
 mod error;
 mod config;
+mod template;
 
 use crate::commands::{Cli, Commands};
 use clap::Parser;

@@ -1,6 +1,6 @@
 [
     {
-        "pack_id": "{behavior_pack_uuid}",
+        "pack_id": "{{behavior_pack_uuid}}",
         "type": "Addon",
         "version": [
             0,
